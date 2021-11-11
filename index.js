@@ -176,6 +176,14 @@ class Instructor extends Lambdasian {
   grade(student, subject) {
     return `${student.name} receives a perfect score on ${subject}`;
   }
+  grader(student, grade) {
+    let points = Math.floor(Math.random());
+    if (grade >= 50) {
+      return (student.grade = student.grade + points);
+    } else {
+      return (student.grade = student.grade - points);
+    }
+  }
 }
 
 const instructor = new Instructor({
@@ -212,6 +220,7 @@ class Student extends Lambdasian {
     this.previousBackground = attrs.previousBackground;
     this.className = attrs.className;
     this.favSubjects = attrs.favSubjects;
+    this.grade = 80;
   }
   listSubjects() {
     return `Loving ${this.favSubjects}`;
@@ -221,6 +230,13 @@ class Student extends Lambdasian {
   }
   sprintChallenge(subject) {
     return `${student.name} has begun sprint challenge on ${subject}`;
+  }
+  graduate(grade) {
+    if (grade > 70) {
+      return `Hooray you have graduated`;
+    } else {
+      return `You need to keep working`;
+    }
   }
 }
 
@@ -236,6 +252,7 @@ console.log(student);
 console.log(student.listSubjects());
 console.log(student.PRAssignment("JS"));
 console.log(student.sprintChallenge("Redux"));
+console.log(instructor.grader(Student, student.grade));
 
 /*
   TASK 6
@@ -250,7 +267,34 @@ console.log(student.sprintChallenge("Redux"));
         + `standUp` a method that takes in a slack channel and returns `{name} announces to {channel}, @channel standy times!`
         + `debugsCode` a method that takes in a student object and a subject and returns `{name} debugs {student.name}'s code on {subject}`
 */
-class ProjectManager {}
+class ProjectManager extends Instructor {
+  constructor(attrs) {
+    super(attrs);
+    this.gradClassName = attrs.gradClassName;
+    this.favInstructor = attrs.favInstructor;
+  }
+  standUp(channel) {
+    return `${this.name} announces to ${channel}, @channel standy times!`;
+  }
+  debugsCode(student, subject) {
+    return `${this.name} debugs ${student.name}'s code on ${subject}`;
+  }
+}
+
+const manager = new ProjectManager({
+  name: "Dan",
+  age: 30,
+  location: "NY City",
+  specialty: "SQL",
+  favLanguage: "Html",
+  catchPhrase: "you suck",
+  gradClassName: "Web25",
+  favInstructor: "Luis",
+});
+console.log(manager);
+console.log(manager.standUp("NewLearner"));
+console.log(manager.debugsCode(student.name, "JavaScript"));
+
 /*
   STRETCH PROBLEM (no tests!)
     - Extend the functionality of the Student by adding a prop called grade and setting it equal to a number between 1-100.
